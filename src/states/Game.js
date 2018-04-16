@@ -7,20 +7,20 @@ export default class extends Phaser.State {
     preload() { }
 
     create() {
-        const bannerText = 'Phaser + ES6 + Webpack'
-        let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
-            font: '40px Bangers',
-            fill: '#77BFA3',
-            smoothed: false
+        const bannerText = 'CAKE SLAYER '
+        let banner = this.add.text(this.world.centerX, 80, bannerText, {
+            font: '50px Bangers',
+            fill: '#DC143C',
+            smoothed: true
         })
 
-        banner.padding.set(10, 16)
+        banner.padding.set(100)
         banner.anchor.setTo(0.5)
 
         this.boss = new Boss({
             game: this.game,
-            x: this.world.centerX,
-            y: this.world.centerY,
+            x: this.world.width - 150,
+            y: this.world.height - 150,
             asset: 'boss'
         })
 
@@ -29,7 +29,7 @@ export default class extends Phaser.State {
 
     render() {
         if (__DEV__) {
-            this.game.debug.spriteInfo(this.boss, 32, 32)
+            //this.game.debug.spriteInfo(this.boss, 32, 32)
         }
     }
 }
