@@ -3,8 +3,8 @@ import Phaser from 'phaser'
 import Boss from '../sprites/Boss'
 
 export default class extends Phaser.State {
-    init() { }
-    preload() { }
+    init() {}
+    preload() {}
 
     create() {
         const bannerText = 'CAKE SLAYER '
