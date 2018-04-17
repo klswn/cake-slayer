@@ -32,7 +32,7 @@ export default class extends Phaser.State {
         this.player = new Player({
             game: this.game,
             x: 150,
-            y: this.world.height - 120,
+            y: this.world.height,
             asset: 'player'
         });
 

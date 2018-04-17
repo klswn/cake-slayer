@@ -13,10 +13,13 @@ export default class extends Phaser.Sprite {
 
         this.game = game;
 
+        this.body.updateBounds(0,0,this.game.world.width, this.game.world.height - 120)
         this.body.collideWorldBounds = true;
         this.anchor.setTo(0.5);
         this.direction = -1;
         this.facing = LEFT;
+
+        this.body.gravity.y = 2000;
 
         this.body.velocity.x = 0;
         this.body.setSize(180, 250, 40, 4);
@@ -25,7 +28,6 @@ export default class extends Phaser.Sprite {
         this.cursors = game.input.keyboard.createCursorKeys();
         this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.jumpTimer = 0;
-        console.log({body: this.body, onFloor: this.body.onFloor()})
 
     }
 
@@ -36,9 +38,24 @@ export default class extends Phaser.Sprite {
             this.frame = PLAYER_RIGHT_FRAME;
         }
 
-        if (this.jumpButton.isDown && this.body.onFloor() && game.time.now > this.jumpTimer)
+        // console.log({
+        //     // body: this.body,
+        //     // body_y: this.body.y,
+        //     // stuff: this.game.world.height - 120,
+        //     'this.jumpButton.isDown':this.jumpButton.isDown,
+        //     'this.body.y':this.body.y,
+        //     'this.game.world.height - 120':this.game.world.height - 120,
+        //     'this.game.time.now':this.game.time.now,
+        //     'this.jumpTimer':this.jumpTimer,
+        // });
+
+        if (this.jumpButton.isDown
+            // && this.body.y === 418
+            && this.body.onFloor()
+            && this.game.time.now > this.jumpTimer)
         {
-            this.body.velocity.y = -250;
+            console.log('jump');
+            this.body.velocity.y = -1000;
             this.jumpTimer = game.time.now + 750;
         }
 
