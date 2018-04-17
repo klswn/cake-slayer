@@ -21,6 +21,7 @@ export default class extends Phaser.State {
         this.icingSFX = this.add.audio('icingSFX');
         this.cakeHitSFX = this.add.audio('cakeHitSFX');
         this.damageSFX = this.add.audio('damageSFX');
+        this.levelUpSFX = this.add.audio('levelUpSFX');
 
         // create the boss and player objects
         this.boss = new Boss({
@@ -51,7 +52,7 @@ export default class extends Phaser.State {
         this.game.add.existing(this.player);
 
         // create the cakePop loop
-        this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
+        this.cakePopEvent = this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
 
         this.cakeHits = 0;
 
@@ -72,6 +73,8 @@ export default class extends Phaser.State {
         for (let lcv = 0; lcv < this.healthBar.length; lcv++) {
             this.game.add.existing(this.healthBar[lcv]);
         }
+
+        this.gameEnded = false;
     }
 
     fireCakePop() {
@@ -79,7 +82,7 @@ export default class extends Phaser.State {
             game: this.game,
             x: this.boss.x - 64,
             y: this.boss.y - this.getRandomNumber(0, 64),
-            angle: this.getRandomNumber(-25, 0),
+            angle: this.getRandomNumber(-35, -4),
             asset: 'cakePop',
         });
 
@@ -93,7 +96,7 @@ export default class extends Phaser.State {
 
             this.nextFire = this.game.time.now + this.fireRate;
 
-            icing.reset(this.player.x - 8, this.player.y - 8);
+            icing.reset(this.player.x + 8, this.player.y - 38);
 
             this.game.physics.arcade.moveToXY(icing, 1000 * direction, this.player.y, 1000);
             this.icingSFX.play();
@@ -103,7 +106,6 @@ export default class extends Phaser.State {
     cakePopCollisionHandler(player, cakePop) {
         cakePop.kill();
         this.hitPlayer();
-        // add damage stuff here later
     }
 
     icingCollisionHandler(boss, icing) {
@@ -112,17 +114,16 @@ export default class extends Phaser.State {
         this.cakeHits++;
 
         if (this.cakeHits === 3) {
+            this.levelUpSFX.play();
             this.boss.updateAnimation('oneThird');
         } else if (this.cakeHits === 6) {
+            this.levelUpSFX.play();
             this.boss.updateAnimation('twoThirds');
         } else if (this.cakeHits === 9) {
+            this.levelUpSFX.play();
             this.boss.updateAnimation('full');
-        } else if (this.cakeHits === 12) {
-            console.log('win!');
+            this.endGameRoutine();
         }
-
-        console.log(this.cakeHits);
-        // add damage stuff for boss here
     }
 
     playerBossCollisionHandler(boss, player) {
@@ -133,6 +134,7 @@ export default class extends Phaser.State {
     }
 
     hitPlayer() {
+        if (this.gameEnded) return;
         this.damageSFX.play();
         this.playerHealth--;
         if (this.playerHealth === 0) {
@@ -145,6 +147,11 @@ export default class extends Phaser.State {
 
     getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    endGameRoutine() {
+        this.gameEnded = true;
+        game.time.events.remove(this.cakePopEvent);
     }
 
     update() {

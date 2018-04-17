@@ -37,6 +37,7 @@ export default class extends Phaser.State {
         this.load.audio('cakeHitSFX', 'assets/sounds/cakeHitSound.wav');
         this.load.audio('jumpSFX', 'assets/sounds/jumpSound.wav');
         this.load.audio('damageSFX', 'assets/sounds/damageSound.wav');
+        this.load.audio('levelUpSFX', 'assets/sounds/levelUpSound.wav');
     }
 
     create() {
