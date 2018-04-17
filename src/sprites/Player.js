@@ -17,18 +17,15 @@ export default class extends Phaser.Sprite {
         this.cursors = game.input.keyboard.createCursorKeys();
 
         this.body.velocity.x = 0;
-        this.scale.setTo(.125, .125);
+        this.body.setSize(180, 250, 40, 4);
+        this.scale.setTo(0.5, 0.5);
 
         this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.leftCursor = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         this.rightCursor = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-
     }
 
     update() {
-
-
         if (this.facing == LEFT) {
             this.frame = PLAYER_LEFT_FRAME;
         } else {
@@ -80,6 +77,5 @@ export default class extends Phaser.Sprite {
         //         this.facing = 'idle';
         //     }
         // }
-
     }
 }
