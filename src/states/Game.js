@@ -1,30 +1,36 @@
 /* globals __DEV__ */
-import Phaser from 'phaser'
-import Boss from '../sprites/Boss'
+import Phaser from 'phaser';
+import Boss from '../sprites/Boss';
+import CakePop from '../sprites/CakePop.js';
 
 export default class extends Phaser.State {
     init() {}
     preload() {}
 
     create() {
-        const bannerText = 'CAKE SLAYER '
+        const bannerText = 'CAKE SLAYER ';
         let banner = this.add.text(this.world.centerX, 80, bannerText, {
             font: '50px Bangers',
             fill: '#DC143C',
             smoothed: true
-        })
+        });
 
-        banner.padding.set(100)
-        banner.anchor.setTo(0.5)
+        banner.padding.set(100);
+        banner.anchor.setTo(0.5);
 
         this.boss = new Boss({
             game: this.game,
             x: this.world.width - 150,
             y: this.world.height - 150,
-            asset: 'boss'
-        })
+            asset: 'boss2'
+        });
 
-        this.game.add.existing(this.boss)
+        this.cakePop = new CakePop({
+            game: this.game,
+        });
+
+        this.game.add.existing(this.boss);
+        this.game.add.existing(this.cakePop);
     }
 
     render() {

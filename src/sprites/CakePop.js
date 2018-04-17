@@ -1,18 +1,17 @@
 import Phaser from 'phaser';
 
 export default class extends Phaser.Sprite {
-    constructor({game, x, y, asset}) {
-        super(game, x, y, asset);
+    constructor({game}) {
+        super(game);
         game.physics.enable(this);
-        this.body.collideWorldBounds = true;
+        this.body.collideWorldBounds = false;
         this.anchor.setTo(0.5);
         this.direction = -1;
     }
 
     update() {
         if (!this.body.isMoving) {
-            this.body.moveTo(1000, 100 * this.direction, 0);
-            this.direction = -this.direction;
+            this.body.moveTo(1500, 1000 * this.direction, 0);
         }
     }
 }
