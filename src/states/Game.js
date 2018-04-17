@@ -9,7 +9,7 @@ export default class extends Phaser.State {
 
     create() {
         let background = this.add.image(this.world.centerX, this.world.centerY, 'background');
-        let music = new Phaser.Sound(this, 'cakeSlayerMusic', 1, true);
+        let music = new Phaser.Sound(this, 'cakeSlayerLoop', 1, true);
         let banner = this.add.text(this.world.centerX, 40, 'CAKE SLAYER ', {
             font: '50px Bangers',
             fill: '#DC143C',
@@ -29,7 +29,7 @@ export default class extends Phaser.State {
         });
 
         this.game.add.existing(this.boss);
-        this.game.time.events.loop(Phaser.Timer.SECOND * 3, this.fireCakePop, this);
+        this.game.time.events.loop(Phaser.Timer.SECOND, this.fireCakePop, this);
     }
 
     fireCakePop() {
@@ -37,7 +37,7 @@ export default class extends Phaser.State {
             game: this.game,
             x: this.boss.x - 64,
             y: this.boss.y - this.getRandomNumber(0, 64),
-            angle: this.getRandomNumber(-8, 15),
+            angle: this.getRandomNumber(-3, 7),
             asset: 'cakePop',
         });
 
