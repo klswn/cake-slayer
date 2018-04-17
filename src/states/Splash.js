@@ -23,6 +23,7 @@ export default class extends Phaser.State {
         //
         this.load.image('boss', 'assets/images/cakeBoss.png');
         this.load.spritesheet('boss2', 'assets/images/cakeBoss2.png', 64, 64);
+        this.load.spritesheet('player', 'assets/images/greenMarioSprite.png', 256, 256);
     }
 
     create() {
