@@ -27,7 +27,7 @@ export default class extends Phaser.State {
             game: this.game,
             x: this.world.width - 180,
             y: this.world.height - 257,
-            asset: 'bossNaked',
+            asset: 'boss',
         });
 
         this.player = new Player({
@@ -66,7 +66,7 @@ export default class extends Phaser.State {
             this.healthBar[lcv] = heath;
         }
 
-        for (let lcv=0; lcv < this.healthBar.length; lcv++) {
+        for (let lcv = 0; lcv < this.healthBar.length; lcv++) {
             this.game.add.existing(this.healthBar[lcv]);
         }
     }
@@ -114,6 +114,16 @@ export default class extends Phaser.State {
         icing.kill();
         this.cakeHitSFX.play();
         this.cakeHits++;
+
+        if (this.cakeHits === 3) {
+            this.boss.updateAnimation('oneThird');
+        } else if (this.cakeHits === 6) {
+            this.boss.updateAnimation('twoThirds');
+        } else if (this.cakeHits === 9) {
+            this.boss.updateAnimation('full');
+        } else if (this.cakeHits === 12) {
+            console.log('win!');
+        }
 
         console.log(this.cakeHits);
         // add damage stuff for boss here
