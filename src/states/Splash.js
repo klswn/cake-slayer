@@ -56,12 +56,17 @@ export default class extends Phaser.State {
     }
 
     startGame() {
-        this.themeMusic.stop();
         this.state.start('Game', false);
     }
 
     update() {
         if (this.enterKey.isDown) {
+            if (!this.airhornFlag) {
+                this.themeMusic.stop();
+                //make sure airhorn only plays once
+                this.add.audio('airhornSFX').play();
+            }
+            this.airhornFlag = true;
             game.camera.fade('#000', 1500);
             this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.startGame, this);
         }
