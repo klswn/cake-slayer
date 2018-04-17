@@ -13,9 +13,12 @@ export default class extends Phaser.State {
         let background = this.add.image(this.world.centerX, this.world.centerY, 'background');
         background.anchor.setTo(0.5);
 
-        // loop the music
-        let music = new Phaser.Sound(this, 'cakeSlayerLoop', 1, true);
+        // loop the theme music
+        let music = new Phaser.Sound(this, 'cakeSlayerThemeLoop', 1, true);
         music.play();
+
+        // init SFX
+        this.icingSFX = this.add.audio('icingSFX');
 
         // create the boss and player objects
         this.boss = new Boss({
@@ -71,16 +74,16 @@ export default class extends Phaser.State {
             icing.reset(this.player.x - 8, this.player.y - 8);
 
             this.game.physics.arcade.moveToXY(icing, 1000 * direction, this.player.y, 1000);
+            this.icingSFX.play();
         }
     }
 
-    cakePopCollisionHandler() {
-        this.cakePop.kill();
+    cakePopCollisionHandler(player, cakePop) {
+        cakePop.kill();
         // add damage stuff here later
     }
 
-    icingCollisionHandler() {
-        let icing = this.icingGroup.getFirstAlive();
+    icingCollisionHandler(boss, icing) {
         icing.kill();
         // add damage stuff for boss here
     }
