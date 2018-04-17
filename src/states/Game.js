@@ -54,6 +54,7 @@ export default class extends Phaser.State {
         this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
 
         this.cakeHits = 0;
+        this.playerHits = 0;
     }
 
     fireCakePop() {
@@ -85,6 +86,7 @@ export default class extends Phaser.State {
     cakePopCollisionHandler(player, cakePop) {
         cakePop.kill();
         this.damageSFX.play();
+        this.playerHits++;
         // add damage stuff here later
     }
 
