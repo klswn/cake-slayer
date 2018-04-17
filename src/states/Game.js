@@ -54,7 +54,21 @@ export default class extends Phaser.State {
         this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
 
         this.cakeHits = 0;
-        this.playerHits = 0;
+
+        this.playerHealth = 5;
+
+        this.healthBar = [];
+
+        for (let lcv=0; lcv < this.playerHealth; lcv++) {
+            const x = lcv*128;
+            const y = 0;
+            const heath = new Phaser.Sprite(this.game, x, y, 'health');
+            this.healthBar[lcv] = heath;
+        }
+
+        for (let lcv=0; lcv < this.healthBar.length; lcv++) {
+            this.game.add.existing(this.healthBar[lcv]);
+        }
     }
 
     fireCakePop() {
@@ -86,7 +100,8 @@ export default class extends Phaser.State {
     cakePopCollisionHandler(player, cakePop) {
         cakePop.kill();
         this.damageSFX.play();
-        this.playerHits++;
+        this.playerHealth--;
+        this.healthBar[this.playerHealth].kill();
         // add damage stuff here later
     }
 
