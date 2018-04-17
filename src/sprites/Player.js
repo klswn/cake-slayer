@@ -31,6 +31,7 @@ export default class extends Phaser.Sprite {
         this.fireIcing = fireIcing;
 
         this.jumpSFX = this.game.add.audio('jumpSFX');
+
     }
 
     update() {
@@ -39,16 +40,6 @@ export default class extends Phaser.Sprite {
         } else {
             this.frame = PLAYER_RIGHT_FRAME;
         }
-
-        // console.log({
-        //     // body: this.body,
-        //     // body_y: this.body.y,
-        //     // stuff: this.game.world.height - 120,
-        //     'this.body.y':this.body.y,
-        //     'this.game.world.height - 120':this.game.world.height - 120,
-        //     'this.game.time.now':this.game.time.now,
-        //     'this.jumpTimer':this.jumpTimer,
-        // });
 
         // this fires independent of the other keys
         if (this.spaceBar.isDown) {
