@@ -9,8 +9,9 @@ export default class extends Phaser.State {
     preload() {}
 
     create() {
-        const bannerText = 'CAKE SLAYER ';
-        let banner = this.add.text(this.world.centerX, 80, bannerText, {
+        let background = this.add.image(this.world.centerX, this.world.centerY, 'background');
+        let music = new Phaser.Sound(this, 'cakeSlayerLoop', 1, true);
+        let banner = this.add.text(this.world.centerX, 40, 'CAKE SLAYER ', {
             font: '50px Bangers',
             fill: '#DC143C',
             smoothed: true
@@ -18,12 +19,14 @@ export default class extends Phaser.State {
 
         banner.padding.set(100);
         banner.anchor.setTo(0.5);
+        background.anchor.setTo(0.5);
+        music.play();
 
         this.boss = new Boss({
             game: this.game,
-            x: this.world.width - 150,
-            y: this.world.height - 150,
-            asset: 'boss2'
+            x: this.world.width - 100,
+            y: this.world.height - 100,
+            asset: 'boss',
         });
 
         this.player = new Player({
@@ -33,13 +36,30 @@ export default class extends Phaser.State {
             asset: 'player'
         });
 
+        this.game.add.existing(this.boss);
+        this.game.add.existing(this.player);
+        this.game.time.events.loop(Phaser.Timer.SECOND, this.fireCakePop, this);
+    }
+
+    fireCakePop() {
         this.cakePop = new CakePop({
             game: this.game,
+            x: this.boss.x - 64,
+            y: this.boss.y - this.getRandomNumber(0, 64),
+            angle: this.getRandomNumber(-3, 7),
+            asset: 'cakePop',
         });
 
-        this.game.add.existing(this.boss);
         this.game.add.existing(this.cakePop);
-        this.game.add.existing(this.player);
+
+    }
+
+    getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    update() {
+
     }
 
     render() {
