@@ -25,6 +25,7 @@ export default class extends Phaser.State {
 
         // load spritesheets
         this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 256, 256);
+        this.load.spritesheet('bossNaked', 'assets/images/cakeBossNaked.png', 256, 256);
         this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 64, 64);
         this.load.spritesheet('player', 'assets/images/greenMarioSprite.png', 256, 256);
 
@@ -32,6 +33,9 @@ export default class extends Phaser.State {
         this.load.audio('cakeSlayerThemeLoop', 'assets/sounds/cakeSlayerThemeLoop.wav');
         this.load.audio('cakeSlayerTheme', 'assets/sounds/cakeSlayerTheme.wav');
         this.load.audio('icingSFX', 'assets/sounds/icingSound.wav');
+        this.load.audio('cakeHitSFX', 'assets/sounds/cakeHitSound.wav');
+        this.load.audio('jumpSFX', 'assets/sounds/jumpSound.wav');
+        this.load.audio('damageSFX', 'assets/sounds/damageSound.wav');
     }
 
     create() {

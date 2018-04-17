@@ -29,6 +29,8 @@ export default class extends Phaser.Sprite {
         this.jumpTimer = 0;
 
         this.fireIcing = fireIcing;
+
+        this.jumpSFX = this.game.add.audio('jumpSFX');
     }
 
     update() {
@@ -56,6 +58,7 @@ export default class extends Phaser.Sprite {
         if (this.cursors.up.isDown
                 && this.body.onFloor()
                 && this.game.time.now > this.jumpTimer) {
+            this.jumpSFX.play();
             this.body.velocity.y = -1000;
             this.jumpTimer = game.time.now + 750;
         }

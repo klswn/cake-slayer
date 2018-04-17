@@ -19,13 +19,15 @@ export default class extends Phaser.State {
 
         // init SFX
         this.icingSFX = this.add.audio('icingSFX');
+        this.cakeHitSFX = this.add.audio('cakeHitSFX');
+        this.damageSFX = this.add.audio('damageSFX');
 
         // create the boss and player objects
         this.boss = new Boss({
             game: this.game,
             x: this.world.width - 180,
             y: this.world.height - 257,
-            asset: 'boss',
+            asset: 'bossNaked',
         });
 
         this.player = new Player({
@@ -50,6 +52,8 @@ export default class extends Phaser.State {
 
         // create the cakePop loop
         this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
+
+        this.cakeHits = 0;
     }
 
     fireCakePop() {
@@ -80,11 +84,16 @@ export default class extends Phaser.State {
 
     cakePopCollisionHandler(player, cakePop) {
         cakePop.kill();
+        this.damageSFX.play();
         // add damage stuff here later
     }
 
     icingCollisionHandler(boss, icing) {
         icing.kill();
+        this.cakeHitSFX.play();
+        this.cakeHits++;
+
+        console.log(this.cakeHits);
         // add damage stuff for boss here
     }
 
