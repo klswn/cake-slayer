@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import Boss from '../sprites/Boss';
 import CakePop from '../sprites/CakePop.js';
+import Player from '../sprites/Player';
 
 export default class extends Phaser.State {
     init() {}
@@ -28,7 +29,15 @@ export default class extends Phaser.State {
             asset: 'boss',
         });
 
+        this.player = new Player({
+            game: this.game,
+            x: 150,
+            y: this.world.height - 150,
+            asset: 'player'
+        });
+
         this.game.add.existing(this.boss);
+        this.game.add.existing(this.player);
         this.game.time.events.loop(Phaser.Timer.SECOND * 1.5, this.fireCakePop, this);
     }
 
