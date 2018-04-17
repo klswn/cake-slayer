@@ -44,10 +44,10 @@ export default class extends Phaser.State {
         background.anchor.setTo(0.5);
 
         // loop the music
-        let music = new Phaser.Sound(this, 'cakeSlayerTheme', 1, true);
+        let music = new Phaser.Sound(this.game, 'cakeSlayerTheme', 1, true);
         music.play();
 
-        this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     }
 
     update() {
