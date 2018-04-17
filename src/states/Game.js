@@ -60,10 +60,11 @@ export default class extends Phaser.State {
         this.healthBar = [];
 
         for (let lcv=0; lcv < this.playerHealth; lcv++) {
-            const x = lcv*64;
-            const y = 0;
-            const heath = new Phaser.Sprite(this.game, x, y, 'health');
-            this.healthBar[lcv] = heath;
+            const x = 40 + (lcv * 40);
+            const y = 50;
+            const health = new Phaser.Sprite(this.game, x, y, 'health');
+            health.scale.setTo(0.5, 0.5);
+            this.healthBar[lcv] = health;
         }
 
         for (let lcv = 0; lcv < this.healthBar.length; lcv++) {
@@ -99,14 +100,7 @@ export default class extends Phaser.State {
 
     cakePopCollisionHandler(player, cakePop) {
         cakePop.kill();
-        this.damageSFX.play();
-        this.playerHealth--;
-        if (this.playerHealth === 0) {
-            this.themeSong.stop();
-            this.state.start('GameOver', false, true);
-            return;
-        }
-        this.healthBar[this.playerHealth].kill();
+        this.hitPlayer();
         // add damage stuff here later
     }
 
@@ -127,6 +121,21 @@ export default class extends Phaser.State {
 
         console.log(this.cakeHits);
         // add damage stuff for boss here
+    }
+
+    playerBossCollision(boss, player) {
+        this.hitPlayer();
+    }
+
+    hitPlayer() {
+        this.damageSFX.play();
+        this.playerHealth--;
+        if (this.playerHealth === 0) {
+            this.themeSong.stop();
+            this.state.start('GameOver', false, true);
+            return;
+        }
+        this.healthBar[this.playerHealth].kill();
     }
 
     getRandomNumber(min, max) {
