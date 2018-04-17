@@ -162,7 +162,7 @@ export default class extends Phaser.State {
 
             // sprite physics body info
             // this.game.debug.bodyInfo(this.player, 32, 32);
-            // this.game.debug.body(this.player);
+            this.game.debug.body(this.player);
 
             // this.game.debug.bodyInfo(this.boss, 32, 32);
             // this.game.debug.body(this.boss);
