@@ -31,8 +31,8 @@ export default class extends Phaser.State {
 
         this.player = new Player({
             game: this.game,
-            x: 100,
-            y: this.world.height,
+            x: 150,
+            y: this.world.height - 120,
             asset: 'player'
         });
 
@@ -53,17 +53,35 @@ export default class extends Phaser.State {
         this.game.add.existing(this.cakePop);
     }
 
+    collisionHandler() {
+        this.cakePop.kill();
+        // add damage stuff here later
+    }
+
     getRandomNumber(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     update() {
-
+        this.game.physics.arcade.overlap(this.player, this.cakePop, this.collisionHandler, null, this);
     }
 
     render() {
         if (__DEV__) {
-            //this.game.debug.spriteInfo(this.boss, 32, 32)
+            // sprite position info
+            //this.game.debug.spriteInfo(this.boss, 32, 32);
+            //this.game.debug.spriteInfo(this.player, 32, 32);
+            //this.game.debug.spriteInfo(this.cakePop, 32, 32);
+
+            // sprite physics body info
+            // this.game.debug.bodyInfo(this.player, 32, 32);
+            // this.game.debug.body(this.player);
+
+            // this.game.debug.bodyInfo(this.boss, 32, 32);
+            // this.game.debug.body(this.boss);
+
+            // if (this.cakePop) this.game.debug.bodyInfo(this.cakePop, 32, 32);
+            // if (this.cakePop) this.game.debug.body(this.cakePop);
         }
     }
 }
