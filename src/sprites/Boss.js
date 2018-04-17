@@ -16,9 +16,17 @@ export default class extends Phaser.Sprite {
         this.anchor.setTo(0.5);
         this.scale.setTo(0.85, 0.85);
 
-        // sprite animation
-        this.animations.add('move', [0, 1, 2, 3, 4, 5], true);
-        this.animations.play('move', 10, true);
+        // sprite animations
+        this.animations.add('naked', [0, 1, 2, 3, 4, 5, 6], true);
+        this.animations.add('oneThird', [7, 8, 9, 10, 11, 12, 13], true);
+        this.animations.add('twoThirds', [14, 15, 16, 17, 18, 19, 20], true);
+        this.animations.add('full', [21, 22, 23, 24, 25, 26, 27], true);
+
+        this.updateAnimation('naked');
+    }
+
+    updateAnimation(animationName) {
+        this.animations.play(animationName, 10, true);
     }
 
     update() {}
