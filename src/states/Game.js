@@ -14,8 +14,8 @@ export default class extends Phaser.State {
         background.anchor.setTo(0.5);
 
         // loop the theme music
-        let music = new Phaser.Sound(this, 'cakeSlayerThemeLoop', 1, true);
-        music.play();
+        this.themeSong = new Phaser.Sound(this, 'cakeSlayerThemeLoop', 1, true);
+        this.themeSong.play();
 
         // init SFX
         this.icingSFX = this.add.audio('icingSFX');
@@ -101,6 +101,11 @@ export default class extends Phaser.State {
         cakePop.kill();
         this.damageSFX.play();
         this.playerHealth--;
+        if (this.playerHealth === 0) {
+            this.themeSong.stop();
+            this.state.start('GameOver', false, true);
+            return;
+        }
         this.healthBar[this.playerHealth].kill();
         // add damage stuff here later
     }
