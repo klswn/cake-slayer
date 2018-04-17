@@ -41,7 +41,7 @@ export default class extends Phaser.State {
         this.icingGroup = this.game.add.group();
         this.icingGroup.enableBody = true;
         this.icingGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        this.icingGroup.createMultiple(50, 'cakePop');
+        this.icingGroup.createMultiple(50, 'icing');
         this.icingGroup.setAll('checkWorldBounds', true);
         this.icingGroup.setAll('outOfBoundsKill', true);
         this.nextFire = 0;
