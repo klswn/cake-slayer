@@ -20,14 +20,30 @@ export default class extends Phaser.State {
         this.load.setPreloadSprite(this.loaderBar);
 
         // load assets
+        this.load.image('splash', 'assets/images/splash.png');
         this.load.image('background', 'assets/images/background.png');
         this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 64.1, 64);
         this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 37, 36);
         this.load.audio('cakeSlayerLoop', 'assets/sounds/cakeSlayerLoop.wav');
+        this.load.audio('cakeSlayerMusic', 'assets/sounds/cakeSlayer.wav');
         this.load.spritesheet('player', 'assets/images/greenMarioSprite.png', 256, 256);
     }
 
     create() {
-        this.state.start('Game');
+        // set the background
+        let background = this.add.image(this.world.centerX, this.world.centerY, 'splash');
+        background.anchor.setTo(0.5);
+
+        // loop the music
+        let music = new Phaser.Sound(this, 'cakeSlayerLoop', 1, true);
+        music.play();
+
+        this.enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    }
+
+    update() {
+        if (this.enterKey.isDown) {
+            this.state.start('Game');
+        }
     }
 }
