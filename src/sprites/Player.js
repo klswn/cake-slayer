@@ -10,19 +10,22 @@ export default class extends Phaser.Sprite {
     constructor({game, x, y, asset}) {
         super(game, x, y, asset);
         game.physics.enable(this);
+
+        this.game = game;
+
         this.body.collideWorldBounds = true;
         this.anchor.setTo(0.5);
         this.direction = -1;
         this.facing = LEFT;
-        this.cursors = game.input.keyboard.createCursorKeys();
 
         this.body.velocity.x = 0;
         this.scale.setTo(.125, .125);
 
+        this.cursors = game.input.keyboard.createCursorKeys();
         this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.leftCursor = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        this.rightCursor = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        this.jumpTimer = 0;
 
+        console.log({body: this.body, onFloor: this.body.onFloor()})
 
     }
 
@@ -35,15 +38,15 @@ export default class extends Phaser.Sprite {
             this.frame = PLAYER_RIGHT_FRAME;
         }
 
-        // if (jumpButton.isDown && this.body.onFloor() && game.time.now > jumpTimer)
-        // {
-        //     player.body.velocity.y = -250;
-        //     jumpTimer = game.time.now + 750;
-        // }
+        if (this.jumpButton.isDown && this.body.onFloor() && game.time.now > this.jumpTimer)
+        {
+            this.body.velocity.y = -250;
+            this.jumpTimer = game.time.now + 750;
+        }
 
-        if (!this.leftCursor.isDown && !this.rightCursor.isDown) {
+        if (!this.cursors.left.isDown && !this.cursors.right.isDown) {
             this.body.velocity.x =0;
-        } else if (this.leftCursor.isDown) {
+        } else if (this.cursors.left.isDown) {
             this.facing = LEFT;
             this.body.velocity.x = -150;
 
@@ -52,7 +55,7 @@ export default class extends Phaser.Sprite {
             //     this.animations.play(LEFT);
             //     this.facing = LEFT;
             // }
-        } else if (this.rightCursor.isDown) {
+        } else if (this.cursors.right.isDown) {
             this.facing = RIGHT;
             this.body.velocity.x = 150;
 
