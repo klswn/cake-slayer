@@ -59,6 +59,8 @@ export default class extends Phaser.State {
 
         this.healthBar = [];
 
+        this.lastBossHit = 0;
+
         for (let lcv=0; lcv < this.playerHealth; lcv++) {
             const x = 40 + (lcv * 40);
             const y = 50;
@@ -123,8 +125,11 @@ export default class extends Phaser.State {
         // add damage stuff for boss here
     }
 
-    playerBossCollision(boss, player) {
-        this.hitPlayer();
+    playerBossCollisionHandler(boss, player) {
+        if (this.game.time.now - 1000 > this.lastBossHit) {
+            this.lastBossHit = this.game.time.now;
+            this.hitPlayer();
+        }
     }
 
     hitPlayer() {
@@ -145,6 +150,7 @@ export default class extends Phaser.State {
     update() {
         this.game.physics.arcade.overlap(this.player, this.cakePop, this.cakePopCollisionHandler, null, this);
         this.game.physics.arcade.overlap(this.boss, this.icingGroup, this.icingCollisionHandler, null, this);
+        this.game.physics.arcade.overlap(this.boss, this.player, this.playerBossCollisionHandler, null, this);
     }
 
     render() {
