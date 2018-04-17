@@ -23,6 +23,7 @@ export default class extends Phaser.State {
         this.load.image('background', 'assets/images/background.png');
         this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 64.1, 64);
         this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 36.2, 36);
+        this.load.audio('cakeSlayerMusic', 'assets/sounds/cakeSlayer.wav');
     }
 
     create() {
