@@ -18,11 +18,11 @@ export default class extends Phaser.State {
         centerGameObjects([this.loaderBg, this.loaderBar]);
 
         this.load.setPreloadSprite(this.loaderBar);
-        //
-        // load your assets
-        //
-        this.load.image('boss', 'assets/images/cakeBoss.png');
-        this.load.spritesheet('boss2', 'assets/images/cakeBoss2.png', 64, 64);
+
+        // load assets
+        this.load.image('background', 'assets/images/background.png');
+        this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 64.1, 64);
+        this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 36.2, 36);
     }
 
     create() {
