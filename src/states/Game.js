@@ -22,6 +22,10 @@ export default class extends Phaser.State {
         this.cakeHitSFX = this.add.audio('cakeHitSFX');
         this.damageSFX = this.add.audio('damageSFX');
         this.levelUpSFX = this.add.audio('levelUpSFX');
+        this.letsEatSFX = this.add.audio('letsEatSFX');
+        this.gameWinSFX = this.add.audio('gameWinSFX');
+        this.gameWinSFX.volume = 2;
+        this.letsEatSFX.volume = 2;
 
         // create the boss and player objects
         this.boss = new Boss({
@@ -113,14 +117,13 @@ export default class extends Phaser.State {
         this.cakeHitSFX.play();
         this.cakeHits++;
 
-        if (this.cakeHits === 3) {
+        if (this.cakeHits === 5) {
             this.levelUpSFX.play();
             this.boss.updateAnimation('oneThird');
-        } else if (this.cakeHits === 6) {
+        } else if (this.cakeHits === 10) {
             this.levelUpSFX.play();
             this.boss.updateAnimation('twoThirds');
-        } else if (this.cakeHits === 9) {
-            this.levelUpSFX.play();
+        } else if (this.cakeHits === 15) {
             this.boss.updateAnimation('full');
             this.endGameRoutine();
         }
@@ -137,6 +140,7 @@ export default class extends Phaser.State {
         if (this.gameEnded) return;
         this.damageSFX.play();
         this.playerHealth--;
+
         if (this.playerHealth === 0) {
             this.themeSong.stop();
             this.state.start('GameOver', false, true);
@@ -150,8 +154,22 @@ export default class extends Phaser.State {
     }
 
     endGameRoutine() {
+        this.themeSong.stop();
+        this.gameWinSFX.play();
         this.gameEnded = true;
         game.time.events.remove(this.cakePopEvent);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.playLetsEat, this);
+        game.camera.fade('#000', 3000);
+        this.game.time.events.add(Phaser.Timer.SECOND * 3, this.win, this);
+    }
+
+    playLetsEat() {
+        this.letsEatSFX.play();
+    }
+
+    win() {
+        this.themeSong.stop();
+        this.state.start('Win');
     }
 
     update() {

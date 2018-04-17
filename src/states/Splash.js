@@ -38,6 +38,8 @@ export default class extends Phaser.State {
         this.load.audio('jumpSFX', 'assets/sounds/jumpSound.wav');
         this.load.audio('damageSFX', 'assets/sounds/damageSound.wav');
         this.load.audio('levelUpSFX', 'assets/sounds/levelUpSound.wav');
+        this.load.audio('letsEatSFX', 'assets/sounds/letsEat.wav');
+        this.load.audio('gameWinSFX', 'assets/sounds/gameWinSound.wav');
     }
 
     create() {
@@ -52,10 +54,15 @@ export default class extends Phaser.State {
         this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     }
 
+    startGame() {
+        this.themeMusic.stop();
+        this.state.start('Game', false);
+    }
+
     update() {
         if (this.enterKey.isDown) {
-            this.themeMusic.stop();
-            this.state.start('Game', false);
+            game.camera.fade('#000', 1500);
+            this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.startGame, this);
         }
     }
 }
