@@ -3,8 +3,8 @@ import Phaser from 'phaser';
 export const LEFT = 'left';
 export const RIGHT = 'right';
 
-const PLAYER_LEFT_FRAME = 0;
-const PLAYER_RIGHT_FRAME = 1;
+const PLAYER_LEFT_FRAME = 1;
+const PLAYER_RIGHT_FRAME = 0;
 
 const LATERAL_VELOCITY = 300;
 
@@ -22,7 +22,7 @@ export default class extends Phaser.Sprite {
 
         this.body.velocity.x = 0;
         this.body.setSize(180, 250, 40, 4);
-        this.scale.setTo(0.5, 0.5);
+        this.scale.setTo(1.5, 1.5);
 
         this.cursors = game.input.keyboard.createCursorKeys();
         this.spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
