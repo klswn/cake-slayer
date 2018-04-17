@@ -60,7 +60,7 @@ export default class extends Phaser.State {
         this.healthBar = [];
 
         for (let lcv=0; lcv < this.playerHealth; lcv++) {
-            const x = lcv*128;
+            const x = lcv*64;
             const y = 0;
             const heath = new Phaser.Sprite(this.game, x, y, 'health');
             this.healthBar[lcv] = heath;
