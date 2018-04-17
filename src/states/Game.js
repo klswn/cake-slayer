@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import Boss from '../sprites/Boss';
 import CakePop from '../sprites/CakePop.js';
-import Player from '../sprites/Player';
+import Player, {LEFT, RIGHT} from '../sprites/Player';
 
 export default class extends Phaser.State {
     init() {}
@@ -20,8 +20,8 @@ export default class extends Phaser.State {
         // create the boss and player objects
         this.boss = new Boss({
             game: this.game,
-            x: this.world.width - 150,
-            y: this.world.height - 236,
+            x: this.world.width - 180,
+            y: this.world.height - 257,
             asset: 'boss',
         });
 
@@ -29,8 +29,18 @@ export default class extends Phaser.State {
             game: this.game,
             x: 150,
             y: this.world.height,
-            asset: 'player'
+            asset: 'player',
+            fireIcing: () => this.fireIcing(),
         });
+
+        this.icingGroup = this.game.add.group();
+        this.icingGroup.enableBody = true;
+        this.icingGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        this.icingGroup.createMultiple(50, 'cakePop');
+        this.icingGroup.setAll('checkWorldBounds', true);
+        this.icingGroup.setAll('outOfBoundsKill', true);
+        this.nextFire = 0;
+        this.fireRate = 250;
 
         this.game.add.existing(this.boss);
         this.game.add.existing(this.player);
@@ -44,16 +54,35 @@ export default class extends Phaser.State {
             game: this.game,
             x: this.boss.x - 64,
             y: this.boss.y - this.getRandomNumber(0, 64),
-            angle: this.getRandomNumber(-20, 3),
+            angle: this.getRandomNumber(-25, 0),
             asset: 'cakePop',
         });
 
         this.game.add.existing(this.cakePop);
     }
 
-    collisionHandler() {
+    fireIcing() {
+        if (this.game.time.now > this.nextFire && this.icingGroup.countDead() > 0) {
+            const direction = this.player.facing === RIGHT ? 1 : -1;
+            let icing = this.icingGroup.getFirstDead();
+
+            this.nextFire = this.game.time.now + this.fireRate;
+
+            icing.reset(this.player.x - 8, this.player.y - 8);
+
+            this.game.physics.arcade.moveToXY(icing, 1000 * direction, this.player.y, 1000);
+        }
+    }
+
+    cakePopCollisionHandler() {
         this.cakePop.kill();
         // add damage stuff here later
+    }
+
+    icingCollisionHandler() {
+        let icing = this.icingGroup.getFirstAlive();
+        icing.kill();
+        // add damage stuff for boss here
     }
 
     getRandomNumber(min, max) {
@@ -61,7 +90,8 @@ export default class extends Phaser.State {
     }
 
     update() {
-        this.game.physics.arcade.overlap(this.player, this.cakePop, this.collisionHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.cakePop, this.cakePopCollisionHandler, null, this);
+        this.game.physics.arcade.overlap(this.boss, this.icingGroup, this.icingCollisionHandler, null, this);
     }
 
     render() {

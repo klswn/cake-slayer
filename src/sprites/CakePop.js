@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 export default class extends Phaser.Sprite {
-    constructor({game, x, y, angle, asset}) {
+    constructor({game, x, y, angle, asset, duration = 1500, direction = -1}) {
         super(game, x, y, asset);
 
         // enable physics
@@ -9,18 +9,18 @@ export default class extends Phaser.Sprite {
 
         // physics values
         this.body.collideWorldBounds = false;
-        this.body.setSize(14, 12, 12, 12);
+        this.body.setSize(22, 22, 20, 20);
 
         // display values
         this.anchor.setTo(0.5);
-        this.scale.setTo(3, 3);
+        this.scale.setTo(1.8, 1.8);
 
         // sprite animation
         this.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7], true);
         this.animations.play('move', 10, true);
 
         // movement
-        this.body.moveTo(1500, -1000, angle);
+        this.body.moveTo(duration, 1000 * direction, angle);
     }
 
     update() {}

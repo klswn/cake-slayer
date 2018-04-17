@@ -22,8 +22,8 @@ export default class extends Phaser.State {
         // load assets
         this.load.image('splash', 'assets/images/splash.png');
         this.load.image('background', 'assets/images/background.png');
-        this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 64.1, 64);
-        this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 37, 36);
+        this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 256, 256);
+        this.load.spritesheet('cakePop', 'assets/images/cakePop.png', 64, 64);
         this.load.audio('cakeSlayerLoop', 'assets/sounds/cakeSlayerLoop.wav');
         this.load.audio('cakeSlayerMusic', 'assets/sounds/cakeSlayer.wav');
         this.load.spritesheet('player', 'assets/images/greenMarioSprite.png', 256, 256);
@@ -42,7 +42,7 @@ export default class extends Phaser.State {
     }
 
     update() {
-        if (this.enterKey.isDown) {
+        if (this.enterKey.isDown || true) {
             this.state.start('Game');
         }
     }
