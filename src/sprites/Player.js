@@ -23,7 +23,7 @@ export default class extends Phaser.Sprite {
         this.body.gravity.y = 2000;
 
         this.body.velocity.x = 0;
-        this.body.setSize(40, 59, 10, 4);
+        this.body.setSize(60, 85, 10, 4);
 
         this.cursors = game.input.keyboard.createCursorKeys();
         this.spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
