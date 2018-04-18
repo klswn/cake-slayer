@@ -23,7 +23,6 @@ export default class extends Phaser.State {
     }
 
     resetGame() {
-        this.themeMusic.stop();
         this.state.start('Game');
     }
 }
