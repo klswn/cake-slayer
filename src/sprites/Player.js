@@ -3,8 +3,10 @@ import Phaser from 'phaser';
 export const LEFT = 'left';
 export const RIGHT = 'right';
 
-const PLAYER_LEFT_FRAME = 1;
-const PLAYER_RIGHT_FRAME = 0;
+const JUMP_LEFT = 1;
+const JUMP_RIGHT = 0;
+const WALK_LEFT = 3;
+const WALK_RIGHT = 2;
 
 const LATERAL_VELOCITY = 300;
 
@@ -22,7 +24,6 @@ export default class extends Phaser.Sprite {
 
         this.body.velocity.x = 0;
         this.body.setSize(40, 59, 10, 4);
-        this.scale.setTo(1.75, 1.75);
 
         this.cursors = game.input.keyboard.createCursorKeys();
         this.spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -34,12 +35,25 @@ export default class extends Phaser.Sprite {
 
     }
 
+    isJumping() {
+        return this.game.time.now <= this.jumpTimer;
+    }
+
     update() {
-        if (this.facing == LEFT) {
-            this.frame = PLAYER_LEFT_FRAME;
+        if (this.isJumping()) {
+            if (this.facing == LEFT) {
+                this.frame = JUMP_LEFT;
+            } else {
+                this.frame = JUMP_RIGHT;
+            }
         } else {
-            this.frame = PLAYER_RIGHT_FRAME;
+            if (this.facing == LEFT) {
+                this.frame = WALK_LEFT;
+            } else {
+                this.frame = WALK_RIGHT;
+            }
         }
+
 
         // this fires independent of the other keys
         if (this.spaceBar.isDown) {
@@ -48,7 +62,7 @@ export default class extends Phaser.Sprite {
 
         if (this.cursors.up.isDown
                 && this.body.onFloor()
-                && this.game.time.now > this.jumpTimer) {
+                && !this.isJumping()) {
             this.jumpSFX.play();
             this.body.velocity.y = -1000;
             this.jumpTimer = game.time.now + 750;
