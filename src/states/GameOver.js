@@ -20,13 +20,12 @@ export default class extends Phaser.State {
         this.gameOverSound = game.add.audio('gameOverSound');
         this.gameOverSound.play();
 
-        this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        let enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        enterKey.onDown.addOnce(this.resetGame, this);
     }
 
-    update() {
-        if (this.enterKey.isDown) {
-            this.gameOverSound.stop();
-            this.state.start('Splash');
-        }
+    resetGame() {
+        this.gameOverSound.stop();
+        this.state.start('Splash');
     }
 }

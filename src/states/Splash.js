@@ -52,23 +52,18 @@ export default class extends Phaser.State {
         this.themeMusic = game.add.audio('cakeSlayerTheme');
         this.themeMusic.play();
 
-        this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        let enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        enterKey.onDown.addOnce(this.onEnterPress, this);
+    }
+
+    onEnterPress() {
+        this.themeMusic.stop();
+        this.add.audio('airhornSFX').play();
+        game.camera.fade('#000', 1500);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.startGame, this);
     }
 
     startGame() {
         this.state.start('Game', false);
-    }
-
-    update() {
-        if (this.enterKey.isDown) {
-            if (!this.airhornFlag) {
-                this.themeMusic.stop();
-                //make sure airhorn only plays once
-                this.add.audio('airhornSFX').play();
-            }
-            this.airhornFlag = true;
-            game.camera.fade('#000', 1500);
-            this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.startGame, this);
-        }
     }
 }

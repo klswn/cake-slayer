@@ -23,7 +23,7 @@ export default class extends Phaser.Sprite {
         this.body.gravity.y = 2000;
 
         this.body.velocity.x = 0;
-        this.body.setSize(60, 85, 10, 4);
+        this.body.setSize(64, 85, 14, 8);
 
         this.cursors = game.input.keyboard.createCursorKeys();
         this.spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -32,7 +32,6 @@ export default class extends Phaser.Sprite {
         this.fireIcing = fireIcing;
 
         this.jumpSFX = this.game.add.audio('jumpSFX');
-
     }
 
     isJumping() {
@@ -73,39 +72,9 @@ export default class extends Phaser.Sprite {
         } else if (this.cursors.left.isDown) {
             this.facing = LEFT;
             this.body.velocity.x = -1 * LATERAL_VELOCITY;
-
-            // if (this.facing != LEFT)
-            // {
-            //     this.animations.play(LEFT);
-            //     this.facing = LEFT;
-            // }
         } else if (this.cursors.right.isDown) {
             this.facing = RIGHT;
             this.body.velocity.x = LATERAL_VELOCITY;
-
-            // if (this.facing != RIGHT)
-            // {
-            //     this.animations.play(RIGHT);
-            //     this.facing = RIGHT;
-            // }
         }
-        // else
-        // {
-        //     if (this.facing != 'idle')
-        //     {
-        //         // this.animations.stop();
-        //
-        //         if (this.facing == LEFT)
-        //         {
-        //             this.frame = 0;
-        //         }
-        //         else
-        //         {
-        //             this.frame = 1;
-        //         }
-        //
-        //         this.facing = 'idle';
-        //     }
-        // }
     }
 }
