@@ -22,10 +22,8 @@ export default class extends Phaser.State {
         this.cakeHitSFX = this.add.audio('cakeHitSFX');
         this.damageSFX = this.add.audio('damageSFX');
         this.levelUpSFX = this.add.audio('levelUpSFX');
-        this.letsEatSFX = this.add.audio('letsEatSFX');
         this.gameWinSFX = this.add.audio('gameWinSFX');
         this.gameWinSFX.volume = 2;
-        this.letsEatSFX.volume = 2;
 
         // create the boss and player objects
         this.boss = new Boss({
@@ -158,13 +156,8 @@ export default class extends Phaser.State {
         this.gameWinSFX.play();
         this.gameEnded = true;
         game.time.events.remove(this.cakePopEvent);
-        this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.playLetsEat, this);
-        game.camera.fade('#000', 3000);
-        this.game.time.events.add(Phaser.Timer.SECOND * 3, this.win, this);
-    }
-
-    playLetsEat() {
-        this.letsEatSFX.play();
+        game.camera.fade('#000', 1500);
+        this.game.time.events.add(Phaser.Timer.SECOND * 1.5, this.win, this);
     }
 
     win() {

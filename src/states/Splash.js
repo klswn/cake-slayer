@@ -22,6 +22,7 @@ export default class extends Phaser.State {
         // load images
         this.load.image('splash', 'assets/images/splash.png');
         this.load.image('background', 'assets/images/background.png');
+        this.load.image('winScreen', 'assets/images/winScreen.png');
 
         // load spritesheets
         this.load.spritesheet('boss', 'assets/images/cakeBoss.png', 256, 256);
@@ -39,8 +40,8 @@ export default class extends Phaser.State {
         this.load.audio('damageSFX', 'assets/sounds/damageSound.wav');
         this.load.audio('airhornSFX', 'assets/sounds/airhorn.wav');
         this.load.audio('levelUpSFX', 'assets/sounds/levelUpSound.wav');
-        this.load.audio('letsEatSFX', 'assets/sounds/letsEat.wav');
         this.load.audio('gameWinSFX', 'assets/sounds/gameWinSound.wav');
+        this.load.audio('letsEatSFX', 'assets/sounds/letsEat.wav');
     }
 
     create() {
