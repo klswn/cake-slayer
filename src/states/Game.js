@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import Boss from '../sprites/Boss';
 import CakePop from '../sprites/CakePop.js';
-import Player, {LEFT, RIGHT, ICING_SPEED} from '../sprites/Player';
+import Player, {LEFT, RIGHT, ICING_SPEED, PLAYER_HEALTH} from '../sprites/Player';
 
 export default class extends Phaser.State {
     init() {}
@@ -58,7 +58,7 @@ export default class extends Phaser.State {
 
         this.cakeHits = 0;
 
-        this.playerHealth = 5;
+        this.playerHealth = PLAYER_HEALTH;
 
         this.healthBar = [];
 

@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 const JUMP_VELOCITY = 300;
 const PLAYER_GRAVITY = 2000;
 export const ICING_SPEED = 1000;
+export const PLAYER_HEALTH = 5;
 
 export const LEFT = 'left';
 export const RIGHT = 'right';
