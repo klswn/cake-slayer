@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import Boss from '../sprites/Boss';
 import CakePop from '../sprites/CakePop.js';
-import Player, {LEFT, RIGHT} from '../sprites/Player';
+import Player, {LEFT, RIGHT, ICING_SPEED} from '../sprites/Player';
 
 export default class extends Phaser.State {
     init() {}
@@ -100,7 +100,7 @@ export default class extends Phaser.State {
 
             icing.reset(this.player.x + 8, this.player.y - 38);
 
-            this.game.physics.arcade.moveToXY(icing, 1000 * direction, this.player.y, 1000);
+            this.game.physics.arcade.moveToXY(icing, 1000 * direction, this.player.y, ICING_SPEED);
             this.icingSFX.play();
         }
     }
