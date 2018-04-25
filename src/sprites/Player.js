@@ -1,5 +1,9 @@
 import Phaser from 'phaser';
 
+const JUMP_VELOCITY = 300;
+const PLAYER_GRAVITY = 2000;
+
+
 export const LEFT = 'left';
 export const RIGHT = 'right';
 
@@ -7,8 +11,6 @@ const JUMP_LEFT = 1;
 const JUMP_RIGHT = 0;
 const WALK_LEFT = 3;
 const WALK_RIGHT = 2;
-
-const LATERAL_VELOCITY = 300;
 
 export default class extends Phaser.Sprite {
     constructor({game, x, y, asset, fireIcing}) {
@@ -20,7 +22,7 @@ export default class extends Phaser.Sprite {
         this.anchor.setTo(0.5);
         this.facing = RIGHT;
 
-        this.body.gravity.y = 2000;
+        this.body.gravity.y = PLAYER_GRAVITY;
 
         this.body.velocity.x = 0;
         this.body.setSize(64, 85, 14, 8);
@@ -71,10 +73,10 @@ export default class extends Phaser.Sprite {
             this.body.velocity.x = 0;
         } else if (this.cursors.left.isDown) {
             this.facing = LEFT;
-            this.body.velocity.x = -1 * LATERAL_VELOCITY;
+            this.body.velocity.x = -1 * JUMP_VELOCITY;
         } else if (this.cursors.right.isDown) {
             this.facing = RIGHT;
-            this.body.velocity.x = LATERAL_VELOCITY;
+            this.body.velocity.x = JUMP_VELOCITY;
         }
     }
 }
