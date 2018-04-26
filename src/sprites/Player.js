@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 
-const JUMP_VELOCITY = 300;
+const PLAYER_SPEED = 300;
 const PLAYER_GRAVITY = 2000;
 export const ICING_SPEED = 1000;
 export const PLAYER_HEALTH = 5;
+const JUMP_VELOCITY = 1000;
 
 export const LEFT = 'left';
 export const RIGHT = 'right';
@@ -66,7 +67,7 @@ export default class extends Phaser.Sprite {
                 && this.body.onFloor()
                 && !this.isJumping()) {
             this.jumpSFX.play();
-            this.body.velocity.y = -1000;
+            this.body.velocity.y = -1 * JUMP_VELOCITY;
             this.jumpTimer = game.time.now + 750;
         }
 
@@ -74,10 +75,10 @@ export default class extends Phaser.Sprite {
             this.body.velocity.x = 0;
         } else if (this.cursors.left.isDown) {
             this.facing = LEFT;
-            this.body.velocity.x = -1 * JUMP_VELOCITY;
+            this.body.velocity.x = -1 * PLAYER_SPEED;
         } else if (this.cursors.right.isDown) {
             this.facing = RIGHT;
-            this.body.velocity.x = JUMP_VELOCITY;
+            this.body.velocity.x = PLAYER_SPEED;
         }
     }
 }
